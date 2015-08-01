@@ -63,9 +63,11 @@ module.exports = (robot) ->
     if pct > 0 and Math.random() < pct
       seed = msg.message.text.match /\w+$/
       model.generate seed[0] or '', max, (text) =>
-        msg.send text
+        if text.length > 3
+          msg.send text
 
   # Generate markov chains on demand, optionally seeded by some initial state.
   robot.respond /markov(\s+(.+))?$/i, (msg) ->
     model.generate msg.match[2] or '', max, (text) =>
-      msg.send text
+      if text.length > 3
+        msg.send text
